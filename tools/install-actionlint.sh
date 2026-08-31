@@ -49,10 +49,12 @@ if ! curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
     gh release download "v${version}" --repo rhysd/actionlint \
         --pattern "${archive_name}" --dir "${destination}"
 fi
-if command -v sha256sum >/dev/null 2>&1; then
-    printf '%s  %s\n' "${checksum}" "${archive_path}" | sha256sum --check --status
-elif command -v shasum >/dev/null 2>&1; then
+if command -v shasum >/dev/null 2>&1; then
+    # macOS 原生 shasum 与 Linux 常见环境均可用;优先它,避免 BSD sha256sum
+    # 不支持 --check 导致校验失败(macOS 上 validate --static 会因此中断)。
     [[ "$(shasum -a 256 "${archive_path}" | awk '{print $1}')" == "${checksum}" ]]
+elif command -v sha256sum >/dev/null 2>&1; then
+    printf '%s  %s\n' "${checksum}" "${archive_path}" | sha256sum --check --status
 else
     echo "No SHA-256 verification tool is available" >&2
     exit 1

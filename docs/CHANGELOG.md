@@ -6,6 +6,10 @@
 
 ## Unreleased
 
+- Added a Camping (Tents puzzle) game as a new demo page: 600 levels in three
+  difficulties, pure-C logic model with host tests covering all official
+  answers, NVS progress/best-time persistence, and a three-button UI ported
+  from the web original camping-master.html.
 - Made mini-program BLE install compatibility a template-level invariant: fixed
   protected `cardid`/Recovery partitions, retained the five-second UP-key
   Recovery boot hook, and added CI validation for merged-image structure,
