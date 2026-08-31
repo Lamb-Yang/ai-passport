@@ -38,6 +38,7 @@ static const char *TAG = "demo_camping";
 static const char *const DIFF_NAME[CAMPING_DIFF_COUNT] = { "EASY", "MEDIUM", "HARD" };
 
 static void game_start(void);   // 页面间跳转的前向声明
+static void page_level_build(void);
 
 typedef enum {
     PG_DIFFICULTY,
@@ -137,8 +138,6 @@ static void format_mmss(uint32_t seconds, char *buf, size_t len)
 static void page_difficulty_build(void)
 {
     switch_page(PG_DIFFICULTY);
-    uint8_t unlocked[CAMPING_DIFF_COUNT];
-    for (int d = 0; d < CAMPING_DIFF_COUNT; d++) unlocked[d] = camping_save_unlocked((camping_diff_t)d);
 
     for (int d = 0; d < CAMPING_DIFF_COUNT; d++) {
         lv_obj_t *row = block(s_page, 20, 12 + d * 66, 200, 52, C_PAPER);
